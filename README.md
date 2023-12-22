@@ -2,7 +2,7 @@
 
 This JavaScript Calculator is a project completed as part of the Front End Development Libraries Certification on FreeCodeCamp. It is a web-based calculator that allows users to perform basic arithmetic operations.
 
-![JavaScript Calculator](screenshot.png)
+![JavaScript Calculator](screenshot.PNG)
 
 ## Features
 
