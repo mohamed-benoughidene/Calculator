@@ -33,8 +33,10 @@ if(mathOperation.num2){
   // Function to handle equal button click
 function handleEqualClick(equalButtonPressed){
   return new Promise((resolve, reject) => {
-    const parseNum1 = parseInt(mathOperation.num1);
-    const parseNum2 = parseInt(mathOperation.num2);
+   const parseNum1 = parseFloat(mathOperation.num1);
+    const parseNum2 = parseFloat(mathOperation.num2);
+
+    console.log(parseNum1, parseNum2);
     switch (mathOperation.operator) {
       case "+":
         setMathOperation({
@@ -121,6 +123,10 @@ function handleClear(){
       <button id="nine" onClick={() => handleNumberClick("9")}>
         9
       </button>
+     
+      <button id="decimal" onClick={() => handleNumberClick(".")} >
+        .
+      </button>
       <button id="add" onClick={() => handleOperatorClick("+")}>
         +
       </button>
@@ -138,4 +144,3 @@ function handleClear(){
 };
 
 export default Calculator;
-
