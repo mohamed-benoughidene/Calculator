@@ -11,7 +11,7 @@ This JavaScript Calculator is a project completed as part of the Front End Devel
 - Clear button to reset the calculator.
 ## Demo
 
-You can try out the calculator by visiting the live demo [here](https://your-demo-url.com).
+You can try out the calculator by visiting the live demo [here](https://mellifluous-puffpuff-87e637.netlify.app/).
 
 ## Technologies Used
 
