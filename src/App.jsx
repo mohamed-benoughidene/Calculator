@@ -1,88 +1,100 @@
 import React, { useState } from "react";
 
 const Calculator = () => {
-  const [displayValue, setDisplayValue] = useState("0");
-  const [prevValue, setPrevValue] = useState(null);
-  const [operator, setOperator] = useState(null);
-  const [currentOperation, setCurrentOperation] = useState("");
+   // State to hold the mathematical operation
+ const [mathOperation, setMathOperation] = useState({
+  num1: 0,
+  num2: null,
+  operator: null
+ });
+   // Function to handle number button clicks
+ function handleNumberClick(num){
+      // Add numbers to num1 or num2 depending on if there is an operator
 
-  const handleNumberClick = (num) => {
-    if (displayValue === "0" || operator) {
-      setDisplayValue(num);
-      setCurrentOperation((prevOperation) => prevOperation + num);
-    } else {
-      setDisplayValue((prevValue) => prevValue + num);
-      setCurrentOperation((prevOperation) => prevOperation + num);
-    }
-  };
-
-  const handleOperatorClick = (op) => {
-    if (!prevValue) {
-      setPrevValue(displayValue);
-      setCurrentOperation((prevOperation) => prevOperation + op);
-    } else {
-      setCurrentOperation((prevOperation) => prevOperation + displayValue + op);
-      calculate();
-    }
-    setOperator(op);
-    setDisplayValue("0");
-  };
-
-  const handleEqualsClick = () => {
-    setCurrentOperation((prevOperation) => prevOperation + displayValue);
-    calculate();
-    setOperator(null);
-    setPrevValue(null);
-    setCurrentOperation("");
-  };
-
-  const calculate = () => {
-    let result;
-    const currentValue = parseFloat(displayValue);
-    const previousValue = parseFloat(prevValue);
-
-    switch (operator) {
+  if(mathOperation.operator){
+    let newNumbers = [
+              // Remove leading zeros from num2 if there are any
+      (mathOperation.num2 && mathOperation.num2.charAt(0) === "0") ? "" : mathOperation.num2, num];
+    setMathOperation({...mathOperation, num2: newNumbers.join("")});
+  }else{
+            // Remove leading zeros from num1 if there are any
+    let newNumbers = [mathOperation.num1.toString().replace(/^0+/, ""), num];
+    setMathOperation({...mathOperation, num1: newNumbers.join("")})
+  }
+ }
+   // Function to handle operator button clicks
+ function handleOperatorClick(operator){
+    // Set the operator and call handleEqualClick if there is already a num2
+setMathOperation({...mathOperation, operator});
+if(mathOperation.num2){
+  handleEqualClick()
+}
+ }
+  // Function to handle equal button click
+function handleEqualClick(equalButtonPressed){
+  return new Promise((resolve, reject) => {
+    const parseNum1 = parseInt(mathOperation.num1);
+    const parseNum2 = parseInt(mathOperation.num2);
+    switch (mathOperation.operator) {
       case "+":
-        result = previousValue + currentValue;
+        setMathOperation({
+          num1: parseNum1 + parseNum2,
+          num2: null,
+          operator: equalButtonPressed ? null : "+",
+        })  
         break;
       case "-":
-        result = previousValue - currentValue;
+        setMathOperation({
+          num1: parseNum1 - parseNum2,
+          num2: null,
+          operator: equalButtonPressed ? null : "-",
+        })  
         break;
       case "*":
-        result = previousValue * currentValue;
+        setMathOperation({
+          num1: parseNum1 * parseNum2,
+          num2: null,
+          operator: equalButtonPressed ? null : "*",
+        })  
         break;
       case "/":
-        result = previousValue / currentValue;
+        setMathOperation({
+          num1: parseNum1 / parseNum2,
+          num2: null,
+          operator: equalButtonPressed ? null : "/",
+        })  
         break;
       default:
-        return;
+        reject(new Error("Invalid operator"));
     }
-
-    setDisplayValue(result.toString());
-  };
-
-  const handleClearClick = () => {
-    setDisplayValue("0");
-    setPrevValue(null);
-    setOperator(null);
-    setCurrentOperation("");
-  };
+    resolve();
+  });
+}
+  // Function to handle clear button click
+function handleClear(){
+  setMathOperation({
+    num1: 0,
+    num2: null,
+    operator: null
+  })
+  }
 
   return (
     <div className="calculator">
       <div id="display" className="display">
-        {currentOperation || displayValue}
+      
+      {mathOperation.num1}{mathOperation.operator && ` ${mathOperation.operator}`} {mathOperation.num2}
       </div>
-      <button id="clear" onClick={handleClearClick}>
+      <button id="clear" onClick={handleClear}>
         AC
       </button>
-      <button id="equals" onClick={handleEqualsClick}>
+      <button id="equals" onClick={()=> handleEqualClick(true)}>
         =
       </button>
-      <button id="zero" onClick={() => handleNumberClick("0")}>
+      <button id="zero" onClick={()=> handleNumberClick("0")}>
         0
       </button>
-      <button id="one" onClick={() => handleNumberClick("1")}>
+      <button id="one"  onClick={() => handleNumberClick("1")}>
         1
       </button>
       <button id="two" onClick={() => handleNumberClick("2")}>
@@ -126,3 +138,4 @@ const Calculator = () => {
 };
 
 export default Calculator;
+
