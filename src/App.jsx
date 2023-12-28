@@ -144,7 +144,7 @@ function handleClear(){
       </button>
        
     </div>
-    <a href="#" style={{textDecoration: "none", color: "white", fontSize: "20px"}}>source code</a>
+    <a href="https://github.com/mohamed-benoughidene/Calculator" style={{textDecoration: "none", color: "white", fontSize: "20px"}}>source code</a>
     </div>
 
     
