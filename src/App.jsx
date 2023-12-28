@@ -82,7 +82,10 @@ function handleClear(){
   }
 
   return (
-    <div className="calculator">
+    <div className="app" style={{textAlign: "center"}}>
+       
+<div className="calculator">
+   
       <div id="display" className="display">
       
       {mathOperation.num1}{mathOperation.operator && ` ${mathOperation.operator}`} {mathOperation.num2}
@@ -139,8 +142,12 @@ function handleClear(){
       <button id="divide" onClick={() => handleOperatorClick("/")}>
         /
       </button>
-       <a href="#">source code</a>
+       
     </div>
+    <a href="#" style={{textDecoration: "none", color: "white", fontSize: "20px"}}>source code</a>
+    </div>
+
+    
   );
 };
 
